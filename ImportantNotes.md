@@ -12,5 +12,9 @@
 --These contains the whatever libraries we install from npm and its dependies also.
 --Whenever we install any library, as per it's package.json its dependencies also downloaded and kept inside it.
 
-* gitignore
+* .gitignore
 -- Whatever the paths mentioned in this file will be ignored from the uploading that folder or file to git repo.
+
+* Routes
+-- While creating the routes, order is very important.
+-- If you send "/" first and send any route like "/test", "/login" those will not work, only "/" will be considered.
