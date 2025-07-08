@@ -1,38 +1,38 @@
-const express = require("express"); //importing express
+const express = require("express");  // importing express from node
 
-const app = express(); //creating new instance of express to use further
+const app = express();  // creating new instance for express
 
-//GET Method API
-app.get("/user", (req, res) => {
-    res.send({
-        firstName: "Anusha",
-        lastName: "Prabhakar",
-        age: "25",
-        gender: "F"
-    })
-})
+app.use("/user", (req, res, next) =>{
+    // Route handler 1
+    console.log("Route Handler 1");
+    // res.send("Route Handler Response1")
+    next();
+},
+(req, res, next) => {
+    // Route handler 2
+    console.log("Route Handler 2");
+    // res.send("Route Handler Response2");
+    next();
+},
+(req, res, next) => {
+    // Route handler 3
+    console.log("Route Handler 3");
+    // res.send("Route Handler Response3");
+    next();
+},
+(req, res, next) => {
+    // Route handler 4
+    console.log("Route Handler 4");
+    // res.send("Route Handler Response4");
+    next();
+},
+(req, res) => {
+    // Route handler 5
+    console.log("Route Handler 5");
+    res.send("Route Handler Response5");
+}
+);
 
-//Post API Method
-app.post("/user", (req, res) => {
-    res.send("User Data Saved Successfully!");
-})
-
-//Put API Method
-app.put("/user", (req, res) => {
-    res.send("User Data Updated Successfully!");
-})
-
-//Delete API Method
-app.delete("/user", (req, res) => {
-    res.send("User Data Deleted Successfully!");
-})
-
-//Default API, which will be GET method
-app.use('/test', (req, res)=>{
-    res.send("This is Test");
-})
-
-//My server listening to outside requests
-app.listen(1313, () =>{
-    console.log("Server is running on 1313")
-});
+app.listen(1313,
+    console.log("Server running on 1313...")
+)
