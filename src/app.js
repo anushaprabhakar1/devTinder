@@ -1,38 +1,27 @@
-const express = require("express");  // importing express from node
+const express = require("express");
+const {adminAuth, userAuth} = require("./Middlewares/auth");
 
-const app = express();  // creating new instance for express
+const app = express();
 
-app.use("/user", (req, res, next) =>{
-    // Route handler 1
-    console.log("Route Handler 1");
-    // res.send("Route Handler Response1")
-    next();
-},
-(req, res, next) => {
-    // Route handler 2
-    console.log("Route Handler 2");
-    // res.send("Route Handler Response2");
-    next();
-},
-(req, res, next) => {
-    // Route handler 3
-    console.log("Route Handler 3");
-    // res.send("Route Handler Response3");
-    next();
-},
-(req, res, next) => {
-    // Route handler 4
-    console.log("Route Handler 4");
-    // res.send("Route Handler Response4");
-    next();
-},
-(req, res) => {
-    // Route handler 5
-    console.log("Route Handler 5");
-    res.send("Route Handler Response5");
-}
-);
+//Middlewares for authorization
+app.use('/admin', adminAuth);
+
+app.get("/admin/getAllData", (req, res) => {
+    res.send([
+        data = {
+            "firstName" : "Anusha",
+            "age" : "25"
+        },
+        {message : "Success"}
+    ])
+})
+
+app.get("/user/data", userAuth, 
+    (req, res) => {
+        res.send("User data fetched")
+    }
+)
 
 app.listen(1313,
-    console.log("Server running on 1313...")
+    console.log("Server running on 1313")
 )
