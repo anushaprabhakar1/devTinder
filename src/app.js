@@ -2,7 +2,15 @@ const express = require("express");
 const {adminAuth, userAuth} = require("./Middlewares/auth");
 
 const app = express();
-
+//Handling errors
+app.use("/", (err, req, res, next) => {
+    if(err){
+        res.status(503).send("Error occured")
+    }
+    else{
+        next();
+    }
+})
 //Middlewares for authorization
 app.use('/admin', adminAuth);
 
