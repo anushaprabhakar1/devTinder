@@ -21,6 +21,22 @@ app.post("/signup", async(req, res) => {
     }
 })
 
+//Fetchind data from DB's user collection
+// const user = await User.findById('686f7fb2b5863f5db25874f4');
+// const user = await User.findOne({emailId : "anu@p.com"});
+// const user = await User.find({emailId : "anu@p.com"});
+
+// Fetching all users in user collection
+app.get("/users", async (req, res) => {
+    const user = await User.find({});
+    if(!user){
+        res.status(500).send("Something went wrong!");
+    }
+    else{
+        res.send(user)
+    }
+})
+
 //Once after connecting to DB, it'll send the promise so we are handling here using then
 //Always listen only after connecting to DB
 connectDB().then(
