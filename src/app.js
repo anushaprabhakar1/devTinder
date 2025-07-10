@@ -21,17 +21,12 @@ app.post("/signup", async(req, res) => {
     }
 })
 
-//Fetchind data from DB's user collection
-// const user = await User.findById('686f7fb2b5863f5db25874f4');
-// const user = await User.findOne({emailId : "anu@p.com"});
-// const user = await User.find({emailId : "anu@p.com"});
-
 // Fetching all users in User collection
 app.get("/users", async (req, res) => {
     try{
         const users = await User.find({})
         if (users.length === 0){
-            res.status(500).send("User not found!");
+            res.send("Collection is empty!");
         }
         else {
             res.send(users);
@@ -41,13 +36,36 @@ app.get("/users", async (req, res) => {
     }
 })
 
+// For fetching user by mailId
 app.get("/user", async(req, res) => {
     const userEmailId = req.body.emailId;
     try{
         const user = await User.findOne({emailId : userEmailId});
-        res.send(user);
+        if(!user){
+            res.status(404).send("User not found")
+        }
+        else {
+            res.send(user);
+        }
     } catch(err) {
         res.status(404).send("Something went wrong!");
+    }
+})
+
+//Delete user by Id
+app.delete("/user", async (req, res) => {
+    const userId = req.body.userId;
+
+    try {
+        const user = await User.findByIdAndDelete(userId);
+        if(user){
+            res.send("User deleted successfully!")
+        }
+        else {
+            res.status(404).send("User not found")
+        }
+    } catch (err) {
+        res.status(400).send("Something went wrong")
     }
 })
 
