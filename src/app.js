@@ -26,14 +26,28 @@ app.post("/signup", async(req, res) => {
 // const user = await User.findOne({emailId : "anu@p.com"});
 // const user = await User.find({emailId : "anu@p.com"});
 
-// Fetching all users in user collection
+// Fetching all users in User collection
 app.get("/users", async (req, res) => {
-    const user = await User.find({});
-    if(!user){
-        res.status(500).send("Something went wrong!");
+    try{
+        const users = await User.find({})
+        if (users.length === 0){
+            res.status(500).send("User not found!");
+        }
+        else {
+            res.send(users);
+        }
+    } catch (err) {
+        res.status(500).send("Something went wrong!")
     }
-    else{
-        res.send(user)
+})
+
+app.get("/user", async(req, res) => {
+    const userEmailId = req.body.emailId;
+    try{
+        const user = await User.findOne({emailId : userEmailId});
+        res.send(user);
+    } catch(err) {
+        res.status(404).send("Something went wrong!");
     }
 })
 
