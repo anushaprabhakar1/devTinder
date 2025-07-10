@@ -1,35 +1,37 @@
 const express = require("express");
-const {adminAuth, userAuth} = require("./Middlewares/auth");
+const {connectDB} = require("./config/database")
+const User = require("./models/user") // importing model to do operations in DB
 
 const app = express();
-//Handling errors
-app.use("/", (err, req, res, next) => {
-    if(err){
-        res.status(503).send("Error occured")
-    }
-    else{
-        next();
+
+// Creating new instance of user in User model
+// Adding user into DB
+app.post("/signup", async(req, res) => {
+    const user = new User({
+        firstName : "Chethan",
+        lastName : "Kumar",
+        emailId : "Chethu@anu.com",
+        password : "chethu@123"
+    })
+
+    try{
+        await user.save();
+    res.send("User signed up successfully!");
+    }catch(err) {
+        res.status(400).send("Failed sign up the user!")
     }
 })
-//Middlewares for authorization
-app.use('/admin', adminAuth);
 
-app.get("/admin/getAllData", (req, res) => {
-    res.send([
-        data = {
-            "firstName" : "Anusha",
-            "age" : "25"
-        },
-        {message : "Success"}
-    ])
-})
-
-app.get("/user/data", userAuth, 
-    (req, res) => {
-        res.send("User data fetched")
+//Once after connecting to DB, it'll send the promise so we are handling here using then
+//Always listen only after connecting to DB
+connectDB().then(
+    () => {
+        console.log("DB connected succesfully!");
+        app.listen(1313, () => {
+            console.log("Server running on 1313")
+        }
+        )
     }
-)
-
-app.listen(1313,
-    console.log("Server running on 1313")
-)
+).catch((err) => {
+    console.error("DB not connected!")
+})

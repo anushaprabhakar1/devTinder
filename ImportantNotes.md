@@ -18,3 +18,17 @@
 * Routes
 -- While creating the routes, order is very important.
 -- If you send "/" first and send any route like "/test", "/login" those will not work, only "/" will be considered.
+
+* * * * * * * * 
+* Creating server, connecting to DB and creating schema and model:
+
+* Create server using Express and connect to DB using mongoose library.
+  >> create config folder inside src, then create database.js in config folder.
+  >> go through the code in that file.
+
+* Always listen to server only after connecting to DB, otherwise user may hit API but if DB not connected it'll throw error.
+
+* Creating schema and model
+  >> create models inside scr, then create user.js (schema for user collection)
+  >> export model and use it in API to post, get or put, delete operations.
+  >> In MongoDB always follows like Cluster >> Database >> Collection >> Documents
