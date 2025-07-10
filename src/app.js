@@ -52,6 +52,24 @@ app.get("/user", async(req, res) => {
     }
 })
 
+//Edit a user data by Id
+app.patch("/user", async (req, res) => {
+    const userId = req.body.userId;
+    const data = req.body;
+
+    try{
+        const user = await User.findByIdAndUpdate(userId, data);
+        if(user){
+            res.send("User updated succesfully!");
+        }
+        else{
+            res.status(404).send("User not found!")
+        }
+    } catch (err) {
+        res.status(400).send("Something went wrong!")
+    }
+})
+
 //Delete user by Id
 app.delete("/user", async (req, res) => {
     const userId = req.body.userId;
