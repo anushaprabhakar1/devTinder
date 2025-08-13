@@ -36,5 +36,6 @@ Step 8 : Create "config" folder in "src" and "database.js" inside "config".
 Step 9 : Create schema for the Collection.
 Step 10: Create "models" fodler inside "src" and "user.js" inside "models"(user.js for user collection).
 Step 11: Create model for that schema and export, so import in "app.js".
+Step 12: Create APIs for get,post,patch,delete operation with DB.
 Step 12 : Open terminal and run node app.js.
 

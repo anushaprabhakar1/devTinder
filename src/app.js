@@ -17,7 +17,7 @@ app.post("/signup", async(req, res) => {
         await user.save();
         res.send("User signed up succesfully!")
     } catch(err) {
-        res.status(400).send("User not signed in!")
+        res.status(400).send("SIGNUP FAILED:" + err.message)
     }
 })
 
@@ -58,7 +58,12 @@ app.patch("/user", async (req, res) => {
     const data = req.body;
 
     try{
-        const user = await User.findByIdAndUpdate(userId, data);
+        const user = await User.findByIdAndUpdate({_id : userId}, data, 
+            {
+                returnDocument : "after",
+                runValidators : true
+            }
+        );
         if(user){
             res.send("User updated succesfully!");
         }
@@ -66,7 +71,7 @@ app.patch("/user", async (req, res) => {
             res.status(404).send("User not found!")
         }
     } catch (err) {
-        res.status(400).send("Something went wrong!")
+        res.status(400).send("UPDATE FAILED:" + err.message)
     }
 })
 
